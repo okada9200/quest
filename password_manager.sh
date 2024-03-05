@@ -27,3 +27,21 @@ add_password() {
     echo "$service_name:$user_name:$password" >> passfile
 }
 
+get_password() {
+    echo "サービス名を入力してください："
+    read service_name
+
+    local result=$(grep "^$service_name:" "passfile")
+    if [ -n "$result" ]; then
+        local username=$(echo "$result" | cut -d ':' -f 2)
+        local password=$(echo "$result" | cut -d ':' -f 3)
+        echo "サービス名：$service_name"
+        echo "ユーザー名：$username"
+        echo "パスワード：$password"
+    else
+        echo "そのサービスは登録されていません。"
+    fi
+}
+
+menu
+
